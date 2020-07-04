@@ -1,12 +1,10 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="firstName">First Name</label>
     <input
     type="name"
-    name="firstName"
+    formControlName="firstName"
     class="form-control"
-    required
-    ngModel
     placeholder="eg. Jahangir"
     >
   </div>
@@ -14,10 +12,8 @@
     <label for="middleName">Middle Name</label>
     <input
     type="name"
-    name="middleName"
+    formControlName="middleName"
     class="form-control"
-    required
-    ngModel
     placeholder="eg. Akbar"
     >
   </div>
@@ -25,10 +21,8 @@
     <label for="lastName">Last Name</label>
     <input
     type="name"
-    name="lastName"
+    formControlName="lastName"
     class="form-control"
-    required
-    ngModel
     placeholder="eg. Sultan"
     >
   </div>
@@ -36,10 +30,8 @@
     <label for="email">Email</label>
     <input
     type="email"
-    name="email"
+    formControlName="email"
     class="form-control"
-    required
-    ngModel
     email
     placeholder="example@xyz.com"
     >
@@ -48,16 +40,13 @@
     <label for="contact">Contact</label>
     <input
     type="number"
-    name="contact"
+    formControlName="contact"
     class="form-control"
-    required
-    ngModel
-    pattern="^\d{10}$"
     placeholder="eg. 1234567890 &#40;Must be 10 digits only&#41;">
   </div>
   <div class="form-group">
     <label for="type">Type</label>
-    <select class="browser-default custom-select" ngModel name="type" required>
+    <select class="browser-default custom-select" formControlName="type">
       <option value="" disabled selected hidden>Select staff type</option>
       <option value="facultyAdmin">Faculty Admin</option>
       <option value="studentAdmin">Student Admin</option>
@@ -68,10 +57,8 @@
     <label for="qualification">Qualification</label>
     <input
     type="name"
-    name="qualification"
+    formControlName="qualification"
     class="form-control"
-    required
-    ngModel
     placeholder="eg. M Tech"
     >
   </div>
@@ -79,10 +66,8 @@
     <label for="designation">Designation</label>
     <input
     type="name"
-    name="designation"
+    formControlName="designation"
     class="form-control"
-    required
-    ngModel
     placeholder="eg Lecturer"
     >
   </div>
@@ -90,26 +75,31 @@
     <label for="experience">Experience &#40;years&#41;</label>
     <input
     type="number"
-    name="experience"
+    formControlName="experience"
     class="form-control"
-    required
-    ngModel
-    pattern="^[1-9][0-9]{0,1}$"
     placeholder="eg. 12 &#40;Must be non-zero and 2 digits only&#41;">
   </div>
   <div class="form-group">
     <label for="salary">Salary</label>
     <input
     type="number"
-    name="salary"
+    formControlName="salary"
     class="form-control"
-    required
-    ngModel
-    pattern="^[1-9][0-9]{3,10}$"
     placeholder="eg. 1200 &#40;Must be 4 digit or greater&#41;">
   </div>
-  <!-- <div class="btn-group"> -->
-    <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Create</button>&nbsp;
-    <button type="button" class="btn btn-danger" (click)="onClear(f)">Clear</button>
-  <!-- </div> -->
+  <div class="form-group">
+    <label for="profilePic">Profile Picture</label><br>
+    <button class="btn btn-primary" (click)="filePicker.click()">
+      Select from file
+    </button>
+    <span></span>
+    <input style="visibility: hidden;" type="file" #filePicker (change)="onImagePicked($event)">
+  </div>
+  <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+    <img [src]="imagePreview" [alt]="form.value.title" style="max-height: 500px;">
+  </div><br>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Create</button>&nbsp;
+    <button type="button" class="btn btn-danger" (click)="onClear()">Clear</button>
+  </div>
 </form>

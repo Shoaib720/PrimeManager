@@ -54,8 +54,8 @@ router.put('/:id', (req, res, next) => {
           data: response
         })
       }
-    })
-})
+    });
+});
 
 router.delete('/:id', (req, res, next) => {
   Notice.deleteOne({ _id : req.params.id })

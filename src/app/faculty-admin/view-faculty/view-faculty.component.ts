@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ManageStaffService } from '../manage-staff.service';
 import { User } from '../../Models/user.model';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { User } from '../../Models/user.model';
   templateUrl: './view-faculty.component.html',
   styleUrls: ['./view-faculty.component.css']
 })
-export class ViewFacultyComponent implements OnInit {
+export class ViewFacultyComponent implements OnInit, OnDestroy {
 
   staffs: User[] = [
     {
@@ -29,9 +30,11 @@ export class ViewFacultyComponent implements OnInit {
 
   constructor(private staffService: ManageStaffService) { }
 
+  private staffSub: Subscription;
+
   ngOnInit(): void {
     this.staffService.getStaffData();
-    this.staffService.staffUpdate.subscribe(
+    this.staffSub = this.staffService.staffUpdate.subscribe(
       updatedStaff => {
         this.staffs = updatedStaff;
       }
@@ -40,6 +43,10 @@ export class ViewFacultyComponent implements OnInit {
 
   onDelete(index: number){
     this.staffService.deleteStaffData(index);
+  }
+
+  ngOnDestroy(){
+    this.staffSub.unsubscribe();
   }
 
 }

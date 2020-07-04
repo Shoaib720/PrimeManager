@@ -1,31 +1,21 @@
-<form>
-    <label>Date</label>
-    <input type="text" #date class="form-control">
-    <label>Subject</label>
-    <input type="text" #subject class="form-control">
-    <label>Assignment No.</label>
-    <input type="text" #asgnNo class="form-control">
-    <label>Submission Date</label>
-    <input type="text" #lastDate class="form-control">
-    <label for="name">Assignment Questions</label>
-    <textarea class="form-control" rows="5" #asgnContent></textarea>
-    <br>
-    <button
-        type="button"
-        class="btn btn-success"
-        (click) = 'onPostAssignment(date,subject,asgnNo,lastDate,asgnContent)'>
-            Post Assignment
-    </button>
+<form #f='ngForm' (ngSubmit) = "onPostAssignment()">
+  <label>Subject</label>
+  <input type="text" name="subject" class="form-control" ngModel required>
+  <label>Assignment No.</label>
+  <input type="text" name="asgnNo" class="form-control" ngModel required pattern='^[1-9]+[0-9]*$'>
+  <label>Submission Date</label>
+  <input type="date" name="lastDate" class="form-control" min="2000-01-01" max="2099-12-31" ngModel required>
+  <label for="name">Assignment Questions</label>
+  <textarea class="form-control" rows="5" name="content" ngModel required></textarea>
+  <br>
+  <button
+    type="submit"
+    class="btn btn-success"
+  >
+    Post Assignment
+  </button>&nbsp;
+  <button type="button" class="btn btn-danger" (click)="onClear()">Clear</button>
 </form>
 <br>
 
-<!-- <div class="container list-group-item clearfix">
-    <ul class="list-group" style="list-style-type: none;">
-        <app-view-notices
-        *ngFor="let noticeEl of notices"
-        [notice]="noticeEl"></app-view-notices> 
-    </ul>
-</div> -->
 <app-view-assignments></app-view-assignments>
-
-<!--  -->

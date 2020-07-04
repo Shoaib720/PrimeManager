@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Complaint } from 'src/app/Models/complaints.model';
 import { ComplaintService } from 'src/app/Services/complaint.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -8,17 +9,23 @@ import { ComplaintService } from 'src/app/Services/complaint.service';
   templateUrl: './complaints.component.html',
   styleUrls: ['./complaints.component.css']
 })
-export class ComplaintsComponent implements OnInit {
+export class ComplaintsComponent implements OnInit, OnDestroy {
   complaints: Complaint[];
+
+  private complaintSub: Subscription;
   constructor(private complaintService: ComplaintService) { }
 
   ngOnInit(): void {
     this.complaints = this.complaintService.getComplaints();
-    this.complaintService.updatedComplaints.subscribe(
+    this.complaintSub = this.complaintService.updatedComplaints.subscribe(
       (updComplaints: Complaint[]) => {
         this.complaints = updComplaints;
       }
     );
+  }
+
+  ngOnDestroy(){
+    this.complaintSub.unsubscribe();
   }
 
 }

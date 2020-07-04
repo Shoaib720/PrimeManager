@@ -15,6 +15,7 @@ export class ViewQueriesComponent implements OnInit, OnDestroy {
 
   private loggedUser: AuthData;
 
+  private logSub: Subscription;
   private querySub: Subscription;
 
   queries: Query[] = [];
@@ -25,7 +26,7 @@ export class ViewQueriesComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    this.logService.loggedUser.subscribe(
+    this.logSub = this.logService.loggedUser.subscribe(
       authData => {
         this.loggedUser = authData;
       }
@@ -44,6 +45,7 @@ export class ViewQueriesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.querySub.unsubscribe();
+    this.logSub.unsubscribe();
   }
 
 }

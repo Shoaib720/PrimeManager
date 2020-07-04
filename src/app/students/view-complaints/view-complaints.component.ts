@@ -23,8 +23,7 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    console.log('hello')
-    this.logSub = this.loginService.loggedUser.subscribe(
+    this.logSub = this.logSub = this.loginService.loggedUser.subscribe(
       userData => {
         this.loggedUser = userData;
       }
@@ -44,9 +43,7 @@ export class ViewComplaintsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.complaintSub.unsubscribe();
-    // if (!this.loggedUser){
-    //   this.logSub.unsubscribe();
-    // }
+    this.logSub.unsubscribe();
   }
 
 }

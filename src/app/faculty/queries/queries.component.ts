@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { QueryService } from 'src/app/Services/query.service';
 import { Query } from 'src/app/Models/query.model';
@@ -8,7 +8,7 @@ import { Query } from 'src/app/Models/query.model';
   templateUrl: './queries.component.html',
   styleUrls: ['./queries.component.css']
 })
-export class QueriesComponent implements OnInit {
+export class QueriesComponent implements OnInit, OnDestroy {
 
   querySub: Subscription;
 
@@ -23,6 +23,10 @@ export class QueriesComponent implements OnInit {
         this.queries = updatedQueries;
       }
     );
+  }
+
+  ngOnDestroy(){
+    this.querySub.unsubscribe();
   }
 
 }

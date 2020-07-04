@@ -1,21 +1,22 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Notice } from 'src/app/Models/notice.model';
 import { NoticeService } from 'src/app/Services/notice.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-notices',
   templateUrl: './view-notices.component.html',
   styleUrls: ['./view-notices.component.css']
 })
-export class ViewNoticesComponent implements OnInit {
+export class ViewNoticesComponent implements OnInit, OnDestroy {
   @Output() selectedNotice = new EventEmitter<{index: number, notice: Notice}>();
   notices: Notice[] = [];
+  private noticeSub: Subscription;
   constructor(private noticeService: NoticeService) { }
 
   ngOnInit(): void {
     this.noticeService.getNotices();
-    this.noticeService.noticesUpdated.subscribe(
+    this.noticeSub = this.noticeService.noticesUpdated.subscribe(
       (newNotices: Notice[]) => {
         this.notices = newNotices;
       }
@@ -28,5 +29,9 @@ export class ViewNoticesComponent implements OnInit {
 
   onDeleteNotice(id: number){
     this.noticeService.deleteNotice(id);
+  }
+
+  ngOnDestroy(){
+    this.noticeSub.unsubscribe();
   }
 }

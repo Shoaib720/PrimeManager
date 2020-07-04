@@ -6,7 +6,7 @@ export class ComplaintService{
   complaints: Complaint[] = [
     {
       _id: 'asoeiyreww876vwadsfbew',
-      date : '01/06/2020',
+      date : '2020-06-01',
       content : 'Kashif is bullshit!!!',
       complainerName: 'Aditya',
       complainerEmail: 'aditya@gmail.com'

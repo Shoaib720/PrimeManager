@@ -1,8 +1,40 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const User = require('../models/user');
 const router = express.Router();
+
+
+
+
+
+
+// ==============================================================================
+
+const MIME_TYPE_MAP = {
+  'image/png' : 'png',
+  'image/jpeg' : 'jpg',
+  'image/jpg' : 'jpg'
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const isValid = MIME_TYPE_MAP[file.mimetype];
+    let error = new Error("Invalid MIME type");
+    if(isValid){
+      error = null
+    }
+    cb(error, 'backend/images');
+  },
+  filename: (req, file, cb) => {
+    const name = file.originalname.toLowerCase().split(' ').join('-');
+    const ext = MIME_TYPE_MAP[file.mimetype];
+    cb(null, name + '-' + Date.now() + '.' + ext);
+  }
+});
+
+// ==============================================================================
 
 router.get('',(req, res, next) => {
   User.find().then(
@@ -22,14 +54,15 @@ router.post('', (req, res, next) => {
       name: req.body.name,
       type: req.body.type,
       contact: req.body.contact,
+      image: req.body.image,
       email: req.body.email,
       password: hash,
       qualification: req.body.qualification,
       designation: req.body.designation,
       experience: req.body.experience,
       salary: req.body.salary,
-      // class: req.body.class,
-      // division: req.body.division
+      class: req.body.class,
+      division: req.body.division
     });
     user.save()
     .then(result => {
@@ -43,6 +76,39 @@ router.post('', (req, res, next) => {
       });
     });
   });
+});
+
+router.put('/:id', (req, res, next) => {
+  User.findByIdAndUpdate(
+    { _id : req.params.id },
+    {
+      name: req.body.name,
+      type: req.body.type,
+      contact: req.body.contact,
+      image: req.body.image,
+      email: req.body.email,
+      password: hash,
+      qualification: req.body.qualification,
+      designation: req.body.designation,
+      experience: req.body.experience,
+      salary: req.body.salary,
+      class: req.body.class,
+      division: req.body.division
+    },
+    { new: true },
+    (err, updatedUserData) => {
+      if(err){
+        res.status(500).json({
+          error: err
+        });
+      }else{
+        res.status(201).json({
+          message: 'User Updated!',
+          data: updatedUserData
+        });
+      }
+    }
+  );
 });
 
 router.delete('/:id', (req, res, next) => {

@@ -12,6 +12,11 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  image: {
+    type: String,
+    required: true,
+    default: '../images/default_user.png'
+  },
   email: {
     type: String,
     required: true,

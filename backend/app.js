@@ -1,9 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+
+
 const noticeRoutes = require('./routes/notices');
 const usersRoutes = require('./routes/users');
 const queriesRoutes = require('./routes/queries');
+const asgnRoutes = require('./routes/assignments');
+const complaintRoutes = require('./routes/complaints');
 
 const app = express();
 
@@ -24,5 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/notices', noticeRoutes);
 app.use('/api/v1/queries', queriesRoutes);
+app.use('/api/v1/assignments', asgnRoutes);
+app.use('/api/v1/complaints', complaintRoutes);
 
 module.exports = app;
