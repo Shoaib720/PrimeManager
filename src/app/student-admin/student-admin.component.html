@@ -1,0 +1,51 @@
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar -->
+  <div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Dashboard</div>
+    <div class="list-group list-group-flush">
+      <a
+      class="list-group-item list-group-item-action bg-light"
+      [routerLink] = "['manage-students']"
+      style="cursor: pointer;"
+      >
+        Manage Students
+      </a>
+      <a
+      class="list-group-item list-group-item-action bg-light"
+      [routerLink] = "['complaints']"
+      style="cursor: pointer;"
+      >
+        Students' Complaints
+      </a>
+      <a class="list-group-item list-group-item-action bg-light"
+      [routerLink]="['notices']"
+      style="cursor: pointer;">
+        Notices
+      </a>
+      <a class="list-group-item list-group-item-action bg-light"
+      [routerLink]="['courses']"
+      style="cursor: pointer;">
+        Courses
+      </a>
+      <a class="list-group-item list-group-item-action bg-light"
+      [routerLink]="['settings']"
+      style="cursor: pointer;">
+        Settings
+      </a>
+    </div>
+  </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid" style="margin: 5px;">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+
+
+

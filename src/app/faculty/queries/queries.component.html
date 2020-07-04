@@ -1,0 +1,27 @@
+<!-- <div class="container-fluid" style="max-width: 90%;">
+  <div class="row">
+    <div class="col-xs-12">
+        <app-query-item
+        *ngFor="let queryEl of queries"
+        [query]="queryEl"></app-query-item>
+    </div>
+  </div>
+</div> -->
+
+<mat-accordion multi="true" *ngIf="queries.length>0">
+  <mat-expansion-panel *ngFor="let query of queries; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Date: {{query.date}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{query.subject}}&nbsp;|&nbsp;{{query.studEmail}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>Questions:</p>
+    <p>{{query.content}}</p>
+    <!-- <button mat-raised-button color="primary">Edit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button> -->
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="queries.length<1" style="text-align: center;">There are no queries!</p>

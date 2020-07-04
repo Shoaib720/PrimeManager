@@ -1,0 +1,82 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input
+    type="name"
+    name="firstName"
+    class="form-control"
+    required
+    ngModel
+    placeholder="eg. Jahangir"
+    >
+  </div>
+  <div class="form-group">
+    <label for="middleName">Middle Name</label>
+    <input
+    type="name"
+    name="middleName"
+    class="form-control"
+    required
+    ngModel
+    placeholder="eg. Akbar"
+    >
+  </div>
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input
+    type="name"
+    name="lastName"
+    class="form-control"
+    required
+    ngModel
+    placeholder="eg. Sultan"
+    >
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+    type="email"
+    name="email"
+    class="form-control"
+    required
+    ngModel
+    email
+    placeholder="example@xyz.com"
+    >
+  </div>
+  <div class="form-group">
+    <label for="contact">Contact</label>
+    <input
+    type="number"
+    name="contact"
+    class="form-control"
+    required
+    ngModel
+    pattern="^\d{10}$"
+    placeholder="eg. 1234567890 &#40;Must be 10 digits only&#41;">
+  </div>
+  <div class="form-group">
+    <label for="class">Class</label>
+    <input
+    type="text"
+    name="class"
+    class="form-control"
+    required
+    ngModel
+    placeholder="eg. S.Y.">
+  </div>
+  <div class="form-group">
+    <label for="division">Division</label>
+    <input
+    type="text"
+    name="division"
+    class="form-control"
+    required
+    ngModel
+    placeholder="eg. A">
+  </div>
+  <!-- <div class="btn-group"> -->
+    <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Create</button>&nbsp;
+    <button type="button" class="btn btn-danger">Clear</button>
+  <!-- </div> -->
+</form>

@@ -1,0 +1,31 @@
+<form>
+    <label>Date</label>
+    <input type="text" #date class="form-control">
+    <label>Subject</label>
+    <input type="text" #subject class="form-control">
+    <label>Assignment No.</label>
+    <input type="text" #asgnNo class="form-control">
+    <label>Submission Date</label>
+    <input type="text" #lastDate class="form-control">
+    <label for="name">Assignment Questions</label>
+    <textarea class="form-control" rows="5" #asgnContent></textarea>
+    <br>
+    <button
+        type="button"
+        class="btn btn-success"
+        (click) = 'onPostAssignment(date,subject,asgnNo,lastDate,asgnContent)'>
+            Post Assignment
+    </button>
+</form>
+<br>
+
+<!-- <div class="container list-group-item clearfix">
+    <ul class="list-group" style="list-style-type: none;">
+        <app-view-notices
+        *ngFor="let noticeEl of notices"
+        [notice]="noticeEl"></app-view-notices> 
+    </ul>
+</div> -->
+<app-view-assignments></app-view-assignments>
+
+<!--  -->

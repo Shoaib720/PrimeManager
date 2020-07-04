@@ -1,0 +1,12 @@
+<mat-accordion multi="true" *ngIf="notices.length>0">
+  <mat-card style="margin: 10px;" *ngFor="let notice of notices; let i = index">
+    <mat-card-header>
+      <mat-card-title>Ref. No: {{notice.refno}}</mat-card-title>
+      <mat-card-subtitle>Date: {{notice.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{notice.content}}</p>
+    </mat-card-content>
+  </mat-card>
+</mat-accordion>
+<p *ngIf="notices.length<1" style="text-align: center;">There are no Notices!</p>

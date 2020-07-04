@@ -1,0 +1,9 @@
+<div class="container-fluid" style="max-width: 80%;">
+    <div class="row">
+        <div class="col-xs-12">
+            <app-assignment-item 
+            *ngFor="let asgnEl of assignments"
+            [assignment]="asgnEl"></app-assignment-item>
+        </div>
+    </div>
+</div>

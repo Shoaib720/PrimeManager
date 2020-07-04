@@ -1,0 +1,10 @@
+<form #f='ngForm' (ngSubmit)="onSubmitComplaint(f)">
+    <label for="name">Complaint</label>
+    <textarea name="complaint" class="form-control" rows="5" id="complaint" ngModel required></textarea>
+    <br>
+    <button type="submit" class="btn btn-success" [disabled]="!f.valid">Submit</button>&nbsp;
+    <button type="button" class="btn btn-danger" (click)="onClear(f)">Clear</button>
+</form>
+<br>
+
+<app-view-complaints></app-view-complaints>

@@ -1,0 +1,31 @@
+<!-- <ul class="list-group">
+    <a #ingredient class="list-group-item"
+    style="cursor: pointer; padding-bottom : 25px"
+    *ngFor="let assignment of assignments"
+    >
+        Date: {{assignment.date}}<br>
+        Subject : {{assignment.subject}}<br>
+        Assignment No.: {{assignment.asgnNo}}
+        <button
+        class="btn btn-danger float-right"
+        type='button'
+        (click)="onDeleteAssignment(assignment)">Delete</button>
+    </a>
+</ul> -->
+<mat-accordion multi="true" *ngIf="assignments.length>0">
+  <mat-expansion-panel *ngFor="let assignment of assignments; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Assignment No.: {{assignment.asgnNo}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Subject : {{assignment.subject}}&nbsp;|&nbsp;{{assignment.date}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>Questions:</p>
+    <p>{{assignment.content}}</p>
+    <button mat-raised-button color="primary">Edit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button>
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="assignments.length<1" style="text-align: center;">There are no Assignments!</p>

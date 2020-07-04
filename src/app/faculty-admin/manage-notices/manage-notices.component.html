@@ -1,0 +1,30 @@
+<form #f="ngForm" (ngSubmit)="onPostNotice()">
+    <label for="name">Notice Content</label>
+    <textarea
+    name="content"
+    class="form-control"
+    rows="5"
+    ngModel
+    required
+    ></textarea>
+    <br>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!f.valid">
+        {{editMode ? "Update" : "Post"}}
+    </button>&nbsp;
+    <button type="button" class="btn btn-danger" (click)="onClear()">Clear</button>
+</form>
+<br>
+
+<!-- <div class="container list-group-item clearfix">
+    <ul class="list-group" style="list-style-type: none;">
+        <app-view-notices
+        *ngFor="let noticeEl of notices"
+        [notice]="noticeEl"></app-view-notices>
+    </ul>
+</div> -->
+<app-view-notices (selectedNotice)="onNoticeSelected($event)" ></app-view-notices>
+
+<!--  -->

@@ -1,0 +1,23 @@
+Faculty Admin
+  manage/edit:
+    teachers
+    courses
+    notices
+
+Student Admin
+  manage/edit:
+    students
+    complaints
+
+Faculty
+  assignments
+  performance
+  queries
+
+
+
+Student
+  ask query
+  raise complaints
+  view performance
+  view assignments

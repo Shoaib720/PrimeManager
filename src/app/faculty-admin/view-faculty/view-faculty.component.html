@@ -1,0 +1,21 @@
+<mat-accordion multi="true" *ngIf="staffs.length>0">
+  <mat-expansion-panel *ngFor="let staff of staffs; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{staff.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{staff.email}}&nbsp;|&nbsp;{{staff.contact}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>Designation: {{staff.designation}}</p>
+    <p>Qualification: {{staff.qualification}}</p>
+    <p>Experience: {{staff.experience}} yrs</p>
+    <button mat-raised-button color="primary">Edit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button>
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="staffs.length<1">There are no Staff Records!</p>
+
+<!-- {{panelOpenState ? 'open' : 'closed'}} -->
+<!-- {{staff.designation}} -->

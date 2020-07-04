@@ -1,0 +1,43 @@
+<mat-accordion multi="true" *ngIf="notices.length>0">
+  <mat-expansion-panel *ngFor="let notice of notices; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Ref. No: {{notice.refno}}
+      </mat-panel-title>
+      <mat-panel-description>
+        Date: {{notice.date}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{notice.content}}</p>
+    <button mat-raised-button color="primary" type="button" (click)="onEdit(i)">Edit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="onDeleteNotice(i)">Delete</button>
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="notices.length<1" style="text-align: center;">There are no Notices!</p>
+
+<!-- <ul class="list-group">
+  <a #ingredient class="list-group-item"
+  style="cursor: pointer; padding-bottom : 25px"
+  *ngFor="let notice of notices"
+  >
+      Ref. No: {{notice.refno}}<br>
+      Date: {{notice.date}}
+      <button
+      class="btn btn-danger float-right"
+      type='button'
+      (click)="onDeleteNotice(notice)">Delete</button>
+  </a>
+</ul> -->
+
+<!-- <mat-accordion multi="true" *ngIf="notices.length>0">
+  <mat-card style="margin: 10px;" *ngFor="let notice of notices; let i = index">
+    <mat-card-header>
+      <mat-card-title>Ref. No: {{notice.refno}}</mat-card-title>
+      <mat-card-subtitle>Date: {{notice.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{notice.content}}</p>
+    </mat-card-content>
+  </mat-card>
+</mat-accordion>
+<p *ngIf="notices.length<1" style="text-align: center;">There are no Notices!</p> -->

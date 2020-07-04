@@ -1,0 +1,23 @@
+<form (ngSubmit) = "onSubmit()" #f = "ngForm">
+    <label for="name">Subject</label>
+    <input
+      type="text"
+      id="subject"
+      class="form-control"
+      name="subject"
+      ngModel
+      required>
+    <label for="name">Query</label>
+    <textarea
+      class="form-control"
+      rows="5"
+      id="content"
+      name="content"
+      ngModel
+      required></textarea>
+    <br>
+    <button class="btn btn-success" type="submit" [disabled]="!f.valid">Submit</button>&nbsp;
+    <button type="button" class="btn btn-danger" (click)="onClear()">Clear</button>
+</form>
+<br>
+<app-view-queries></app-view-queries>

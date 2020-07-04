@@ -1,0 +1,33 @@
+<!-- <mat-accordion multi="true" *ngIf="complaints.length>0">
+  <mat-card style="margin: 10px;" *ngFor="let complaint of complaints; let i = index">
+    <mat-card-header>
+      <mat-card-title>Date: {{complaint.date}}</mat-card-title>
+      <mat-card-subtitle>By: {{complaint.complainerName}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{complaint.content}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Edit</button>&nbsp;
+      <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button>
+    </mat-card-actions>
+  </mat-card>
+</mat-accordion>
+<p *ngIf="complaints.length<1" style="text-align: center;">There are no complaints!</p> -->
+
+<mat-accordion multi="true" *ngIf="complaints.length>0">
+  <mat-expansion-panel *ngFor="let complaint of complaints; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Date: {{complaint.date}}
+      </mat-panel-title>
+      <mat-panel-description>
+        By: {{complaint.complainerName}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{complaint.content}}</p>
+    <button mat-raised-button color="primary">Edit</button>&nbsp;
+    <button mat-raised-button color="warn" (click)="onDelete(i)">Delete</button>
+  </mat-expansion-panel>
+</mat-accordion>
+<p *ngIf="complaints.length<1" style="text-align: center;">There are no Complaints!</p>
