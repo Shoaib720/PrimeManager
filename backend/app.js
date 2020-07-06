@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -11,16 +12,28 @@ const complaintRoutes = require('./routes/complaints');
 
 const app = express();
 
-const url = 'mongodb://127.0.0.1:27017/schoolar';
+// =============================Database Connectivity=========================================
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Connect to local mongo db
+const LOCAL_URL = 'mongodb://127.0.0.1:27017/schoolar';
+mongoose.connect(LOCAL_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
+// Connect to ATLAS
+// const REMOTE_URL = 'mongodb+srv://shoaib:pass-mongodb-1999@myfreecluster.uqauj.mongodb.net/prime-manager?retryWrites=true&w=majority';
+// mongoose.connect(REMOTE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
+// ===========================================================================================
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/images', express.static(path.join('backend/public/users/images')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin','*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'x-www-form-urlencodedOrigin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods','GET, POST, PUT, UPDATE, DELETE, OPTIONS');
   next();
 })

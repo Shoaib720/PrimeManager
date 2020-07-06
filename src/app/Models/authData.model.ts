@@ -4,7 +4,7 @@ export class AuthData{
     public email: string,
     public name: string,
     public type: string,
-    public _tokenId: string,
+    private _tokenId: string,
     public expDate: Date
   ){}
 

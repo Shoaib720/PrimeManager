@@ -96,7 +96,7 @@
     <input style="visibility: hidden;" type="file" #filePicker (change)="onImagePicked($event)">
   </div>
   <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-    <img [src]="imagePreview" [alt]="form.value.title" style="max-height: 500px;">
+    <img [src]="imagePreview" [alt]="form.value.title" class="image-responsive" >
   </div><br>
   <div class="form-group">
     <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Create</button>&nbsp;

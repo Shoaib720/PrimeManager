@@ -53,7 +53,7 @@ export class ManageFacultyComponent implements OnInit {
       null,
       null
     );
-    this.staffService.createStaffUser(newStaff);
+    this.staffService.createStaffUser(newStaff, this.form.value.image);
     this.form.reset();
   }
 

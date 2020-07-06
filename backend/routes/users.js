@@ -10,6 +10,7 @@ const router = express.Router();
 
 
 
+
 // ==============================================================================
 
 const MIME_TYPE_MAP = {
@@ -18,21 +19,23 @@ const MIME_TYPE_MAP = {
   'image/jpg' : 'jpg'
 };
 
-const storage = multer.diskStorage({
+const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
     let error = new Error("Invalid MIME type");
     if(isValid){
       error = null
     }
-    cb(error, 'backend/images');
+    cb(error, 'backend/public/users/images');
   },
   filename: (req, file, cb) => {
-    const name = file.originalname.toLowerCase().split(' ').join('-');
+    const name = req.body.email.split('@')[0];
     const ext = MIME_TYPE_MAP[file.mimetype];
-    cb(null, name + '-' + Date.now() + '.' + ext);
+    cb(null, name + '_' + Date.now() + '.' + ext);
   }
 });
+
+const upload = multer({storage: multerStorage});
 
 // ==============================================================================
 
@@ -47,14 +50,15 @@ router.get('',(req, res, next) => {
   )
 });
 
-router.post('', (req, res, next) => {
+router.post('', upload.single('image'), (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
   .then(hash => {
+    const url = req.protocol + '://' + req.get('host');
     const user = new User({
       name: req.body.name,
       type: req.body.type,
       contact: req.body.contact,
-      image: req.body.image,
+      image: url + '/images/' + req.file.filename,
       email: req.body.email,
       password: hash,
       qualification: req.body.qualification,
@@ -66,6 +70,7 @@ router.post('', (req, res, next) => {
     });
     user.save()
     .then(result => {
+      res.setHeader("Access-Control-Allow-Headers", "enctype");
       res.status(201).json({
         message: 'User Created!',
         data: result
@@ -78,38 +83,67 @@ router.post('', (req, res, next) => {
   });
 });
 
-router.put('/:id', (req, res, next) => {
-  User.findByIdAndUpdate(
-    { _id : req.params.id },
-    {
-      name: req.body.name,
-      type: req.body.type,
-      contact: req.body.contact,
-      image: req.body.image,
-      email: req.body.email,
-      password: hash,
-      qualification: req.body.qualification,
-      designation: req.body.designation,
-      experience: req.body.experience,
-      salary: req.body.salary,
-      class: req.body.class,
-      division: req.body.division
-    },
-    { new: true },
-    (err, updatedUserData) => {
-      if(err){
-        res.status(500).json({
-          error: err
-        });
-      }else{
-        res.status(201).json({
-          message: 'User Updated!',
-          data: updatedUserData
-        });
+router.put('/:id', upload.single('image'), (req, res, next) => {
+  bcrypt.hash(req.body.password, 10)
+  .then(hash => {
+    const url = req.protocol + '://' + req.get('host');
+    User.findByIdAndUpdate(
+      { _id : req.params.id },
+      {
+        name: req.body.name,
+        type: req.body.type,
+        contact: req.body.contact,
+        image: url + '/images/' + req.file.filename,
+        email: req.body.email,
+        password: hash,
+        qualification: req.body.qualification,
+        designation: req.body.designation,
+        experience: req.body.experience,
+        salary: req.body.salary,
+        class: req.body.class,
+        division: req.body.division
+      },
+      { new: true },
+      (err, updatedUserData) => {
+        if(err){
+          res.status(500).json({
+            error: err
+          });
+        }else{
+          console.log(req.file)
+          res.status(201).json({
+            message: 'User Updated!',
+            data: updatedUserData
+          });
+        }
       }
-    }
-  );
+    );
+  });
 });
+
+// router.patch('/:id', upload.single('image'), (req, res, next) => {
+//   const user = new User()
+//   User.findByIdAndUpdate(
+//     { _id: req.params.id},
+//     {
+//       image: req.file.path
+//     },
+//     { new: true},
+//     (err, updatedUserData) => {
+//       if(err){
+//         res.status(500).json({
+//           error: err
+//         });
+//       }else{
+//         console.log(req.file)
+//         res.status(201).json({
+//           message: 'User Updated!',
+//           data: updatedUserData
+//         });
+//       }
+//     }
+//   )
+// })
 
 router.delete('/:id', (req, res, next) => {
   User.deleteOne({ _id : req.params.id }).then(

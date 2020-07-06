@@ -9,3 +9,9 @@ form{
 input.ng-invalid.ng-touched,select.ng-invalid.ng-touched{
   border: 1px solid red;
 }
+img {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 400px; /* Set a small width */
+}
