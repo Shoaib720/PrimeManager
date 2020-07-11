@@ -14,8 +14,7 @@ const userSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
-    default: 'backend/public/users/images/default_user.png'
+    required: true
   },
   email: {
     type: String,

@@ -37,6 +37,33 @@ export class ManageStaffService{
     });
   }
 
+  updateProfile(
+    id: string,
+    email: string,
+    userName: string,
+    image: File
+    ){
+    let updateData = new FormData();
+    updateData.append('email', email);
+    updateData.append('image', image, userName.split(' ')[0]);
+    this.http.put<{message: string, data: any}>('http://localhost:3000/api/v1/users/images/' + id, updateData)
+    .subscribe(response => {
+      console.log(response.message);
+    });
+  }
+
+  updatePassword(id: string, oldPass: string, newPass: string){
+    this.http.put<{message: string, data: any}>(
+      'http://localhost:3000/api/v1/users/passwords/' + id,
+      {
+        oldPassword: oldPass,
+        newPassword: newPass
+      }
+    ).subscribe(response => {
+      console.log(response.message);
+    });
+  }
+
   deleteStaffData(index: number){
     const id = this.staffs[index]._id;
     this.http.delete<{message: string}>('http://localhost:3000/api/v1/users/' + id)

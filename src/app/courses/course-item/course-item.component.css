@@ -1,0 +1,13 @@
+
+/* .example-card {
+  max-width: 400px;
+} */
+
+.example-card{
+  width: 80%;
+  margin: 50px;
+}
+
+.grid{
+  padding: 50px;
+}

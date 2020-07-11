@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AuthData } from '../Models/authData.model';
 import { Router } from '@angular/router';
 
@@ -19,9 +19,23 @@ export class LoginService{
 
   loggedUser = new BehaviorSubject<AuthData>(null);
 
+  userProfile = new Subject<string>();
+
   private timer: any;
 
   constructor(private http: HttpClient, private router: Router){}
+
+  getImagePath(id: string){
+    let image: string;
+    this.http.get<{message: string, data: string}>('http://localhost:3000/api/v1/users/image/' + id)
+    .subscribe(
+      res => {
+        image = res.data;
+        console.log('in service' + image);
+        this.userProfile.next(image);
+      }
+    );
+  }
 
   login(email: string, password: string){
     this.http.post<AuthResponse>('http://localhost:3000/api/v1/users/login', {email , password })

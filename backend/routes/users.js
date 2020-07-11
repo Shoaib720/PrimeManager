@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+// var fs = require('fs');
 const User = require('../models/user');
 const router = express.Router();
 
@@ -197,6 +198,122 @@ router.post('/login', (req, res, next) => {
         error: 'Authentication Failed! 3'
       })
     })
+});
+
+router.get('/image/:id', (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+  .then((fetchedRes) => {
+    if(fetchedRes.image){
+      res.status(200).json({
+        message: 'Image Found!!',
+        data: fetchedRes.image
+      });
+    }else{
+      res.status(404).json({
+        error: 'Image not Found'
+      });
+    }
+  })
+  .catch(err => {
+    res.status(404).json({
+      error: err
+    });
+  });
+});
+
+router.put('/passwords/:id', (req, res, next) => {
+  let fetchedUser;
+  User.findOne({ _id: req.params.id })
+  .then(
+    fUser => {
+      if(!fUser){
+        return res.status(401).json({
+          error: 'Authentication Failed! 1'
+        })
+      }
+      fetchedUser = fUser;
+      console.log(fetchedUser)
+      console.log(req.body)
+      return bcrypt.compare(req.body.oldPassword, fUser.password);
+    }
+  )
+  .then(
+    comparisonResult => {
+      if(!comparisonResult){
+        return res.status(401).json({
+          error: 'Authentication Failed! 2'
+        });
+      }
+      console.log(req.body.newPassword);
+      bcrypt.hash(req.body.newPassword, 10)
+      .then(
+        hash => {
+          User.updateOne(
+            { _id: req.params.id },
+            {
+              password: hash
+            }
+          ).then( response => {
+            res.status(201).json({
+              message: 'Password Updated!',
+              data: response
+            });
+          }).catch(err => {
+            res.status(500).json({
+              error : err
+            });
+          });
+        }
+      );
+    }
+  )
+  .catch(err => {
+    res.status(500).json({
+      error : 'shit'
+    });
+  });
+});
+
+router.put('/images/:id', upload.single('image'), (req, res, next) => {
+  const url = req.protocol + '://' + req.get('host');
+  User.updateOne(
+    { _id: req.params.id },
+    {
+      image: url + '/images/' + req.file.filename
+    }
+  ).then( response => {
+    // User.findOne({ _id: req.params.id })
+    // .then(
+    //   fUser => {
+    //     if(!fUser){
+    //       return res.status(401).json({
+    //         error: 'Authentication Failed! 1'
+    //       })
+    //     }
+    //     const filePath = fUser.image.split('/')[-1];
+    //     fs.stat(filePath, function (err, stats) {
+    //       console.log(stats);//here we got all information of file in stats variable
+
+    //       if (err) {
+    //           return console.error(err);
+    //       }
+
+    //       fs.unlink('./server/upload/my.csv',function(err){
+    //            if(err) return console.log(err);
+    //            console.log('file deleted successfully');
+    //       });
+    //    });
+    //   }
+    // )
+    res.status(201).json({
+      message: 'Profile image Updated!',
+      data: response
+    });
+  }).catch(err => {
+    res.status(500).json({
+      error : err
+    });
+  });
 })
 
 module.exports = router;
