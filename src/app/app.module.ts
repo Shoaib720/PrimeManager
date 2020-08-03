@@ -27,6 +27,7 @@ import { AssignmentService } from './Services/assignment.service';
 import { QueryService } from './Services/query.service';
 import { HeaderComponent } from './header/header.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ViewCollegeAdminComponent } from './web-admin/view-college-admin/view-college-admin.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SettingsComponent } from './settings/settings.component';
     CourseItemComponent,
     ViewCoursesComponent,
     HeaderComponent,
-    SettingsComponent
+    SettingsComponent,
+    ViewCollegeAdminComponent
   ],
   imports: [
     BrowserModule,
